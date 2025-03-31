@@ -7,6 +7,7 @@ WORKDIR /app
 # copy the source code from the HOST machine to the container
 COPY src/main.tsx /app/main.tsx
 
+RUN pnpm install
 RUN pnpm run dev
 
 CMD ["nginx", "-g", "daemon off;"]

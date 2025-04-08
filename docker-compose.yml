@@ -12,8 +12,8 @@ services:
       - node
 
   firebase:
-    build: ./firebase
-    image: andreysenov/firebase-tools
+    build: ./firebase/DockerFile
+    image: rambabusaravanan/firebase
     ports:
       - "4000:4000"   # Firebase Emulator Suite UI
       - "8080:8080"   # Firebase Hosting

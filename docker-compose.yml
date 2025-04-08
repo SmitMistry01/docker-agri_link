@@ -1,17 +1,20 @@
+version: '3.8'
+
 services:
   nginx:
-     build:
+    build:
       context: ./nginx
-     container_name: nginx
-     ports:
+    container_name: nginx
+    ports:
       - "80:80"
-     restart: always
-     networks: 
-     - docker-app
-     depends_on: 
-       - node
+    restart: always
+    networks: 
+      - docker-app
+    depends_on: 
+      - node
+
   firebase:
-    image: evenbit/firebase
+    image: ghcr.io/firebase/firebase-tools-emulators:latest
     ports:
       - "4000:4000"   # Firebase Emulator Suite UI
       - "8080:8080"   # Firebase Hosting
@@ -21,12 +24,11 @@ services:
       - "9199:9199"   # Firebase Storage
     environment:
       FIREBASE_PROJECT_ID: "farmx-1381c"
-      FIREBASE_DATABASE_EMULATOR_HOST: "https://farmx-1381c-default-rtdb.firebaseio.com"
-      FIREBASE_AUTH_EMULATOR_HOST: "farmx-1381c.firebaseapp.com"
-      FIREBASE_STORAGE_EMULATOR_HOST: "farmx-1381c.appspot.com"
-
+      FIREBASE_DATABASE_EMULATOR_HOST: "firebase:9000"  # Changed to container reference
+      FIREBASE_AUTH_EMULATOR_HOST: "firebase:8085"      # Changed to container reference
+      FIREBASE_STORAGE_EMULATOR_HOST: "firebase:9199"   # Changed to container reference
     volumes: 
-      - firebase-data:/var/lib/firebase
+      - firebase-data:/home/node/firebase-project
     networks:
       - docker-app
     restart: always
@@ -42,5 +44,14 @@ services:
     restart: always
     depends_on: 
       - firebase
+    networks:
+      - docker-app
     volumes: 
       - firebase-data
+
+networks:
+  docker-app:
+    driver: bridge
+
+volumes:
+  firebase-data:

@@ -12,7 +12,7 @@ services:
       - node
 
   firebase:
-    image: ghcr.io/firebase/firebase-tools-emulators:latest
+    image: evenbit/firebase
     ports:
       - "4000:4000"   # Firebase Emulator Suite UI
       - "8080:8080"   # Firebase Hosting

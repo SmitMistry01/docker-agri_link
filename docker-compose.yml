@@ -12,8 +12,8 @@ services:
       - node
 
   firebase:
-    build: ./firebase/DockerFile
-    image: rambabusaravanan/firebase
+    build: ./firebase  # Directory containing Dockerfile (case-sensitive)
+    image: rambabusaravanan/firebase  # Optional - only needed if you want to tag the built image
     ports:
       - "4000:4000"   # Firebase Emulator Suite UI
       - "8080:8080"   # Firebase Hosting
@@ -23,9 +23,9 @@ services:
       - "9199:9199"   # Firebase Storage
     environment:
       FIREBASE_PROJECT_ID: "farmx-1381c"
-      FIREBASE_DATABASE_EMULATOR_HOST: "firebase:9000"  # Changed to container reference
-      FIREBASE_AUTH_EMULATOR_HOST: "firebase:8085"      # Changed to container reference
-      FIREBASE_STORAGE_EMULATOR_HOST: "firebase:9199"   # Changed to container reference
+      FIREBASE_DATABASE_EMULATOR_HOST: "firebase:9000"
+      FIREBASE_AUTH_EMULATOR_HOST: "firebase:8085"
+      FIREBASE_STORAGE_EMULATOR_HOST: "firebase:9199"
     volumes: 
       - firebase-data:/home/node/firebase-project
     networks:
@@ -44,7 +44,9 @@ services:
     networks:
       - docker-app
     volumes: 
-      - firebase-data
+      - ./:/app                # Mount current directory
+      - /app/node_modules      # Keep node_modules separate
+      - firebase-data:/app/firebase-data  # If node needs access to firebase data
 
 networks:
   docker-app:

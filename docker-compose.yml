@@ -35,6 +35,7 @@ services:
   node:
     build:
       context: .
+      target: dev
     ports:
       - "8000:8000"
     container_name: node_cont
@@ -45,7 +46,6 @@ services:
       - docker-app
     volumes: 
       - ./:/app
-      - /app/node_modules
       - firebase-data:/app/firebase-data
     environment:
       - NODE_ENV=development

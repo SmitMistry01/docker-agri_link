@@ -37,8 +37,6 @@ services:
     ports:
       - "8000:8000"
     container_name: node_cont
-    env_file:
-      - "src/configs/firebase.ts"
     restart: always
     depends_on: 
       - firebase

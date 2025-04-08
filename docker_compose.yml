@@ -1,0 +1,44 @@
+services:
+  nginx:
+     build:
+      context: ./nginx
+     container_name: nginx
+     ports:
+      - "80:80"
+     restart: always
+     networks: 
+     - docker-app
+     depends_on: node
+  firebase:
+    image: evenbit/firebase
+    ports:
+      - "4000:4000"   # Firebase Emulator Suite UI
+      - "8080:8080"   # Firebase Hosting
+      - "5001:5001"   # Firebase Functions
+      - "9000:9000"   # Firebase Database
+      - "8085:8085"   # Firebase Auth
+      - "9199:9199"   # Firebase Storage
+    environment:
+      FIREBASE_PROJECT_ID: "farmx-1381c"
+      FIREBASE_DATABASE_EMULATOR_HOST: "https://farmx-1381c-default-rtdb.firebaseio.com"
+      FIREBASE_AUTH_EMULATOR_HOST: "farmx-1381c.firebaseapp.com"
+      FIREBASE_STORAGE_EMULATOR_HOST: "farmx-1381c.appspot.com"
+
+    volumes: 
+      - firebase-data: /var/lib/firebase
+    networks:
+      - docker-app
+    restart: always
+
+node:
+ build:
+   context: .
+ ports:
+  - "8000:8000"
+ container_name: node_cont
+ env_file:
+ - "src/configs/firebase.ts"
+ restart: always
+ depends_on: firebase
+volumes: 
+ - firebase-data

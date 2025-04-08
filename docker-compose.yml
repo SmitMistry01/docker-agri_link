@@ -11,8 +11,7 @@ services:
     depends_on: 
       - node
 
-  db:
-    container_name: firebase
+  firebase:
     build: ./firebase
     image: rambabusaravanan/firebase
     ports:
@@ -41,7 +40,7 @@ services:
     container_name: node_cont
     restart: always
     depends_on: 
-      - db
+      - firebase
     networks:
       - docker-app
     volumes: 
@@ -53,7 +52,7 @@ services:
     working_dir: /app
     command: sh -c "pnpm install && pnpm run dev"
 
-networks: 
+networks:
   docker-app:
     driver: bridge
 

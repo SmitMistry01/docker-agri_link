@@ -47,10 +47,10 @@ services:
       - ./:/app                # Mount current directory
       - /app/node_modules      # Keep node_modules separate
       - firebase-data:/app/firebase-data  # If node needs access to firebase data
-
-networks:
-  docker-app:
-    driver: bridge
+    environment:
+    - NODE_ENV=development
+    working_dir: /app
+    command: sh -c "pnpm install && pnpm run dev"
 
 volumes:
   firebase-data:

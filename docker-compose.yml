@@ -8,7 +8,8 @@ services:
      restart: always
      networks: 
      - docker-app
-     depends_on: node
+     depends_on: 
+       - node
   firebase:
     image: evenbit/firebase
     ports:
@@ -25,20 +26,21 @@ services:
       FIREBASE_STORAGE_EMULATOR_HOST: "farmx-1381c.appspot.com"
 
     volumes: 
-      - firebase-data: /var/lib/firebase
+      - firebase-data:/var/lib/firebase
     networks:
       - docker-app
     restart: always
 
-node:
- build:
-   context: .
- ports:
-  - "8000:8000"
- container_name: node_cont
- env_file:
- - "src/configs/firebase.ts"
- restart: always
- depends_on: firebase
-volumes: 
- - firebase-data
+  node:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    container_name: node_cont
+    env_file:
+      - "src/configs/firebase.ts"
+    restart: always
+    depends_on: 
+      - firebase
+    volumes: 
+      - firebase-data

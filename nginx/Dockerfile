@@ -1,3 +1,8 @@
-FROM nginx:1.23.3-alpine
+FROM nginx:1.27.5 AS builder
+# Your custom configs here
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+FROM gcr.io/distroless/nginx-debian11
+COPY --from=builder /etc/nginx /etc/nginx
+COPY --from=builder /usr/share/nginx/html /usr/share/nginx/html
+EXPOSE 8080
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

@@ -1,5 +1,5 @@
 #pull the base image which gives all tools and libraries
-FROM node:18-alpine
+FROM node:23-slim
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate

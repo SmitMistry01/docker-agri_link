@@ -1,4 +1,4 @@
-FROM nginx:1.27.5
+FROM nginx:1.25
 
 # Copy custom NGINX config
 COPY nginx.conf /etc/nginx/conf.d/default.conf

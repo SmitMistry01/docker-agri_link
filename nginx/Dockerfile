@@ -1,4 +1,4 @@
-FROM nginx:1.27.5 AS builder
+FROM nginx:1.27.5 AS dev
 # Your custom configs here
 
 FROM gcr.io/distroless/nginx-debian11

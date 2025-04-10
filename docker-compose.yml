@@ -2,6 +2,7 @@ services:
   nginx:
     build:
       context: ./nginx
+      target: dev
     container_name: nginx
     ports:
       - "80:80"

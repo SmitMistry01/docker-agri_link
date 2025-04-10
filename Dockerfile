@@ -1,5 +1,5 @@
 #pull the base image which gives all tools and libraries
-FROM node:23-slim
+FROM node:23-slim AS dev
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate

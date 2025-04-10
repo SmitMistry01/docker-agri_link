@@ -51,6 +51,7 @@ services:
     volumes: 
       - ./:/app
       - firebase-data:/app/firebase-data
+      - /app/node_modules 
     environment:
       - NODE_ENV=development
     working_dir: /app
